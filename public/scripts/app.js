@@ -2,7 +2,7 @@
 
 console.log("App.js is running!");
 
-app = {
+var app = {
     title: "Indecision App",
     subtitle: "Put your life in the hands of a computer",
     options: ['One', 'Two']
@@ -69,9 +69,6 @@ function getLocation(location) {
     }
 }
 
-var userName = 'Andrew';
-var userAge = 26;
-var userLocation = 'New York';
 var templateTwo = React.createElement(
     "div",
     null,
