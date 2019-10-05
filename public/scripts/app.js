@@ -1,83 +1,93 @@
-'use strict';
+"use strict";
 
-// arguments object - no longer bound
-// if you try to access arguments is not gonna work
+console.log("App.js is running!");
 
-
-var add = function add(a, b) {
-    console.log(arguments);
-    return a + b;
+var app = {
+    title: "Indecision App",
+    subtitle: "Put your life in the hands of a computer",
+    options: ['One', 'Two']
 };
 
-// With ES5 syntax, I can pass more than the named
-// arguments (a, b) to the function, and access the 
-// third one with the "arguments" object
+var template = React.createElement(
+    "div",
+    null,
+    React.createElement(
+        "h1",
+        null,
+        " ",
+        app.title,
+        " "
+    ),
+    app.subtitle && React.createElement(
+        "p",
+        null,
+        " ",
+        app.subtitle,
+        " "
+    ),
+    React.createElement(
+        "p",
+        null,
+        app.options.length > 0 ? 'Here are your options' : 'No options'
+    ),
+    React.createElement(
+        "ol",
+        null,
+        React.createElement(
+            "li",
+            null,
+            "Item one"
+        ),
+        React.createElement(
+            "li",
+            null,
+            "Item two"
+        ),
+        React.createElement(
+            "li",
+            null,
+            "Item three"
+        )
+    )
+);
 
-console.log(add(55, 1, 1001));
-
-var addArrow = function addArrow(a, b) {
-    //console.log(arguments); // <-- this doesn't work; not bound
-    return a + b;
+var count = 0;
+var addOne = function addOne() {
+    console.log("addOne");
+};
+var minusOne = function minusOne() {
+    console.log("minusOne");
+};
+var reset = function reset() {
+    console.log("reset");
 };
 
-// --------------------------------------------
-// "this" keyword is no longer bound
-// on arrow functions
+var templateTwo = React.createElement(
+    "div",
+    null,
+    React.createElement(
+        "h1",
+        null,
+        "Count: ",
+        count
+    ),
+    React.createElement(
+        "button",
+        { onClick: addOne },
+        "+1"
+    ),
+    React.createElement(
+        "button",
+        { onClick: minusOne },
+        "-1"
+    ),
+    React.createElement(
+        "button",
+        { onClick: reset },
+        "Reset"
+    )
+);
 
-var user = {
-    name: 'Andrew',
-    cities: ['Cali', 'Medellin', 'Bogota'],
-    printPlacesLived: function printPlacesLived() {
-        // "this" is bound to this instance!
-        console.log(this.name);
-        console.log(this.cities);
+var appRoot = document.getElementById("app");
 
-        var that = this;
-        this.cities.forEach(function (city) {
-            // "this" isn't bound to anything on an anon fx
-            console.log(that.name + " has lived in " + city);
-            // "this" is undefined
-
-            // arrow functions no longer bind their internal this
-            // instead of "undefined", it uses its parent's "this" value
-        });
-
-        this.cities.forEach(function (city) {
-            console.log(that.name + " has lived in " + city);
-        });
-    },
-    // changing printPlacesLived to an arrow fx
-    // use the parent "this": undefined
-
-    newMethodSyntax: function newMethodSyntax(a, b) {
-        console.log(this.name + " in a different way");
-    },
-    printPlacesWithMap: function printPlacesWithMap() {
-        var _this = this;
-
-        var cityMessages = this.cities.map(function (city) {
-            return _this.name + " has lived in " + city + "!";
-        });
-        return cityMessages;
-    }
-};
-
-user.printPlacesLived();
-user.newMethodSyntax();
-console.log(user.printPlacesWithMap());
-
-// Challenge
-
-var multiplier = {
-    numbers: [1, 2, 3],
-    multiplyBy: 8,
-    multiply: function multiply() {
-        var _this2 = this;
-
-        return this.numbers.map(function (number) {
-            return number * _this2.multiplyBy;
-        });
-    }
-};
-
-console.log(multiplier.multiply());
+ReactDOM.render(templateTwo, appRoot);
